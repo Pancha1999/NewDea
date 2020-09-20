@@ -1,0 +1,466 @@
+<%@page import="database.databasecon"%>
+<%@page import="java.sql.Connection"%>
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<!DOCTYPE HTML>
+<!--
+        Traveler by freehtml5.co
+        Twitter: http://twitter.com/fh5co
+        URL: http://freehtml5.co
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Travel In Sri Lanka</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+        <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+        <meta name="author" content="FreeHTML5.co" />
+
+        <!-- Facebook and Twitter integration -->
+        <meta property="og:title" content=""/>
+        <meta property="og:image" content=""/>
+        <meta property="og:url" content=""/>
+        <meta property="og:site_name" content=""/>
+        <meta property="og:description" content=""/>
+        <meta name="twitter:title" content="" />
+        <meta name="twitter:image" content="" />
+        <meta name="twitter:url" content="" />
+        <meta name="twitter:card" content="" />
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="css/animate.css">
+        <!-- Icomoon Icon Fonts-->
+        <link rel="stylesheet" href="css/icomoon.css">
+        <!-- Themify Icons-->
+        <link rel="stylesheet" href="css/themify-icons.css">
+        <!-- Bootstrap  -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="css/magnific-popup.css">
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+
+        <!-- Owl Carousel  -->
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+        <!-- Theme style  -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Modernizr JS -->
+        <script src="js/modernizr-2.6.2.min.js"></script>
+        <!-- FOR IE9 below -->
+        <!--[if lt IE 9]>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    <body>
+
+        <div class="gtco-loader"></div>
+
+        <div id="page">
+
+
+            <!-- <div class="page-inner"> -->
+            <nav class="gtco-nav" role="navigation">
+                <div class="gtco-container">
+
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12">
+                            <div id="gtco-logo"><a href="index.html">Traveler <em>.</em></a></div>
+                        </div>
+                        <div class="col-xs-8 text-right menu-1">
+                            <ul>
+
+                                </li>
+                                <li><a href="pricing.html">Pricing</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="mybooking.jsp">My Bookings</a></li>
+                                <li><a href="login.jsp">LogOut</a></li>
+                            </ul>	
+                        </div>
+                    </div>
+
+                </div>
+            </nav>
+
+            <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/sri-lanka-travel.adapt.1900.1.jpg)">
+                <div class="overlay"></div>
+                <div class="gtco-container">
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-0 text-left">
+
+
+                            <div class="row row-mt-15em">
+
+                                <div class="col-md-12 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+                                    <div  data-content="signup" style="background-color: white">
+                                        <center> <h3> My Bookings</h3></center>
+                                        <h1>
+
+                                        </h1>
+                                        <table border="1" class="table table-striped">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>First Date</th>
+                                                <th>Last Date</th>
+                                                <th>Hotel</th>
+                                                <th>Destination</th>
+                                                <th>Package</th>
+                                                <th></th>
+
+
+
+                                            </tr>
+                                            <%
+                                                try {
+                                                    Statement statement = null;
+                                                    ResultSet resultSet = null;
+                                                    //                HttpSession session = request.getSession();
+                                                    String email = session.getAttribute("email").toString();
+
+                                                    databasecon obj_DB_Connection = new databasecon();
+                                                    Connection connection = obj_DB_Connection.get_connection();
+                                                    statement = connection.createStatement();
+                                                    String sql = "SELECT * FROM trip where email= '" + email + "'";
+
+                                                    resultSet = statement.executeQuery(sql);
+                                                    while (resultSet.next()) {
+                                            %>
+                                            <tr>
+
+                                                <td><label>
+
+                                                        <%=resultSet.getString("id")%></label></td>
+
+                                                <td><label>
+
+                                                        <%=resultSet.getString("fullname")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("email")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("firstd")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("lastd")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("hotel")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("destination")%></label></td>
+                                                <td><label>
+
+                                                        <%=resultSet.getString("package")%></label></td>
+                                                <td><form action="delete" method="post">
+                                                        <input style="display: none;" type="text" name="req_id"
+                                                               value='<%=resultSet.getString("id")%>'>
+                                                        <button type="submit" class="btn danger" >Delete</button>
+                                                    </form></td>
+
+
+
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+
+                                            <%
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            %>
+
+
+                                        </table>  
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+            <div class="gtco-section">
+                <div class="gtco-container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                            <br>
+                            <br>
+                            <h2>Most Popular Destination</h2>
+                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/large-03-sigiriya-rock-1586075801095.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>SIGIRIYA</h2>
+                                    <p>Sigiriya or Sinhagiri is an ancient rock fortress located in the northern Matale.</p>
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/715a3853e4283368db0dafc45ef2bca5.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>ELLA</h2>
+                                    <p>Ella is a small town in the Uva Province, Sri Lanka governed by an Urban Council. </p>
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/Coconut_Farm_in_Mirissa.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>MIRISSA</h2>
+                                    <p>Mirissa is a small town on the south coast of Sri Lanka.</p>
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/Galle-Travel-Guide.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>GALLE</h2>
+                                    <p>Galle is a city on the southwest coast of Sri Lanka..</p>
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/yala-pimg1.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>YALA</h2>
+                                    <p>Yala National Park is a huge area of forest,  in southeast Sri Lanka.</p>
+
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <a href="login.jsp" class="fh5co-card-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="images/Things-To-Do-in-Arugam-Bay.jpg.optimal.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>ARUGAM BAY</h2>
+                                    <p>Arugam Bay, known locally as "Arugam Kudah", is a bay situated on the Sri Lanka's southeast coast.</p>
+                                    <p><span class="btn btn-primary">Schedule a Trip</span></p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="gtco-cover gtco-cover-sm" style="background-image: url(images/img_bg_1.jpg)"  data-stellar-background-ratio="0.5">
+                <div class="overlay"></div>
+                <div class="gtco-container text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1>We have high quality services that you will surely love!</h1>
+                        </div>	
+                    </div>
+                </div>
+            </div>
+
+            <div id="gtco-counter" class="gtco-section">
+                <div class="gtco-container">
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+                            <h2>Our Success</h2>
+                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+                            <div class="feature-center">
+                                <span class="counter js-counter" data-from="0" data-to="196" data-speed="5000" data-refresh-interval="50">1</span>
+                                <span class="counter-label">Destination</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+                            <div class="feature-center">
+                                <span class="counter js-counter" data-from="0" data-to="97" data-speed="5000" data-refresh-interval="50">1</span>
+                                <span class="counter-label">Hotels</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+                            <div class="feature-center">
+                                <span class="counter js-counter" data-from="0" data-to="12402" data-speed="5000" data-refresh-interval="50">1</span>
+                                <span class="counter-label">Travelers</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
+                            <div class="feature-center">
+                                <span class="counter js-counter" data-from="0" data-to="12202" data-speed="5000" data-refresh-interval="50">1</span>
+                                <span class="counter-label">Happy Customer</span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <footer id="gtco-footer" role="contentinfo">
+                <div class="gtco-container">
+                    <div class="row row-p	b-md">
+
+                        <div class="col-md-4">
+                            <div class="gtco-widget">
+                                <h3>About Us</h3>
+                                <p>Travel is the main thing you purchase that makes you more extravagant?. We, at ?Traveler?, swear by this and put stock in satisfying travel dreams that make you perpetually rich constantly. We have been moving excellent encounters for a considerable length of time through our cutting edge planned occasion bundles and other fundamental travel administrations. We use simple templete for this DEA project and we used our Java knowledge to create this web site.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-md-push-1">
+                            <div class="gtco-widget">
+                                <h3>Destination</h3>
+                                <ul class="gtco-footer-links">
+                                    <li><a href="#">SIGIRIYA</a></li>
+                                    <li><a href="#">ANURADHAPURA</a></li>
+                                    <li><a href="#">COLOMBO</a></li>
+                                    <li><a href="#">YALA</a></li>
+                                    <li><a href="#">GALLE</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-md-push-1">
+                            <div class="gtco-widget">
+                                <h3>Hotels</h3>
+                                <ul class="gtco-footer-links">
+                                    <li><a href="https://www.heritancehotels.com/kandalama/">Heritance Kandalama</a></li>
+                                    <li><a href="https://sigiriyakingsresort.com/">Sigiriya King's Resort </a></li>
+                                    <li><a href="https://www.shangri-la.com/">Shangrilla-Colombo</a></li>
+                                    <li><a href="https://www.jetwinghotels.com/jetwingviluyana/accommodation/#gref">Jetwing-Sigiriya</a></li>
+                                    <li><a href="https://www.jetwinghotels.com/jetwingyala/#gref">Yala-Jetwing</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-md-push-1">
+                            <div class="gtco-widget">
+                                <h3>Get In Touch</h3>
+                                <ul class="gtco-quick-contact">
+                                    <li><a href="#"><i class="icon-phone"></i> +94 77 445 9929</a></li>
+                                    <li><a href="https://mail.google.com/mail/u/0/#inbox"><i class="icon-mail2"></i>travller@gmail.com</a></li>
+                                    <li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row copyright">
+                        <div class="col-md-12">
+                            <p class="pull-left">
+                                <small class="block">&copy; 2020 DEA project Using simple web templete and used our Java knowledge.</small> 
+                                <small class="block">Designed by DEA Project Group Members</small>
+                            </p>
+                            <p class="pull-right">
+                            <ul class="gtco-social-icons pull-right">
+                                <li><a href="https://twitter.com/?lang=en"><i class="icon-twitter"></i></a></li>
+                                <li><a href="https://www.facebook.com/"><i class="icon-facebook"></i></a></li>
+                                <li><a href="https://lk.linkedin.com/"><i class="icon-linkedin"></i></a></li>
+                                <li><a href="https://dribbble.com/"><i class="icon-dribbble"></i></a></li>
+                            </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </footer>
+            <!-- </div> -->
+
+        </div>
+
+        <div class="gototop js-top">
+            <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+        </div>
+
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <!-- jQuery Easing -->
+        <script src="js/jquery.easing.1.3.js"></script>
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Waypoints -->
+        <script src="js/jquery.waypoints.min.js"></script>
+        <!-- Carousel -->
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- countTo -->
+        <script src="js/jquery.countTo.js"></script>
+
+        <!-- Stellar Parallax -->
+        <script src="js/jquery.stellar.min.js"></script>
+
+        <!-- Magnific Popup -->
+        <!--<scr        ipt src="js/jquery.magnific-popup.min.js"></script>-->
+        <!--<script src="js/magnific-popup-options.js"></script>-->
+
+        <!-- Datepicker -->
+        <script src="js/bootstrap-datepicker.min.js"></script>
+
+
+        <!-- Main -->
+        <script src="js/main.js"></script>
+
+    </body>
+</html>
+
